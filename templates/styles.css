@@ -1,0 +1,200 @@
+/* Common styles for all pages */
+body {
+    margin: 0;
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+.background {
+    background-image: url('https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    overflow: hidden;
+}
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    text-align: left;
+    padding-left: 20px;
+    padding-top: 150px;
+}
+
+.heading {
+    color: #fff;
+    font-size: 100px;
+    letter-spacing: -5px;
+    font-weight: bold;
+    margin: 0;
+    padding: 10px;
+    background-color: transparent;
+    display: block;
+    text-align: left;
+}
+
+.nav {
+    margin-top: 30px;
+}
+
+.nav-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.nav-item {
+    margin: 10px 0;
+}
+
+.nav-link {
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.header {
+    font-size: 50px;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 40px;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 1s ease-out;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 200px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.card-span {
+    font-size: 64px;
+    margin-bottom: 10px;
+}
+
+.card-p {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+}
+
+.text-block {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    
+    margin-bottom: 20px;
+    font-size: 36px;
+    padding: '20px';
+    border-Radius: '8px';
+    
+    max-width: '80%';
+    width: '100%';
+    text-align: 'left';
+}
+
+.question {
+    font-weight: bold;
+    color: #070a0e;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    font-size: 36px;
+    text-align: center;
+}
+
+.answer {
+    font-size: 24px;
+    color: #e9ecef;
+    text-align: center;
+    margin-bottom: 20px;
+    justify-content:center;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+.start-button {
+    display: inline-block;
+    margin-top: 30px;
+    margin-left: 650px;
+    padding: 15px 30px;
+    font-size: 24px;
+    color: #000; /* Assuming you meant to use a color code for the text */
+    background-color: #61f1ff;
+    text-decoration: none;
+    border-radius: 25px;
+    width: 250px;
+    justify-content: center;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-family: Cambria, Cochin, Georgia, Times, "Cambria", serif;
+}
+
+
+
+
+.start-button:hover {
+    background-color: #005f66;
+    box-shadow: 0 0 15px rgba(0, 128, 128, 0.7);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .items {
+        flex-direction: column;
+    }
+}

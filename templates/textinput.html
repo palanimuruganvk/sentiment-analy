@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Input Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url("https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+            background-position: fixed;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .container {
+            gap: 40px;
+            padding: 20px;
+            background: rgba(232, 229, 229, 0.5);
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-out;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .input-field {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .submit-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007c88;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background-color: #005f6b;
+        }
+
+        .result {
+            margin-top: 20px;
+        }
+
+        .emoji {
+            font-size: 50px; /* Adjust the size of the emoji */
+            display: inline-block;
+            vertical-align: middle;
+            margin-top: -10px;
+            transition: transform 0.3s ease;
+        }
+
+        .emoji:hover {
+            transform: scale(1.2); /* Scale up the emoji on hover */
+        }
+
+        .result-text {
+            font-size: 24px; /* Font size for the result text */
+            margin-top: -10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Text Input Example</h1>
+        <!-- Add ID to form and input fields -->
+        <form id="text-form" method="POST">
+            <input id="user-input" type="text" name="user_input" class="input-field" placeholder="Enter your text" />
+            <button type="submit" class="submit-button">Submit</button>
+        </form>
+        
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        // Map emotions to emojis
+        const emotionToEmoji = {
+            "positive": "😊",   // Happy face for positive sentiment
+            "negative": "😢",   // Sad face for negative sentiment
+            "neutral": "😐"     // Neutral face for neutral sentiment
+        };
+
+        // Add event listener to the form to intercept the submit event
+        document.getElementById('text-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get user input
+            const userInput = document.getElementById('user-input').value;
+
+            // Send user input to the server via fetch POST request
+            fetch('/classify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text: userInput })
+            })
+            .then(response => {
+    if (!response.ok) {
+        return response.json().then(err => { throw new Error(err.error || 'Unknown error occurred'); });
+    }
+    return response.json();
+})
+.then(data => {
+    const emotion = data.predicted_emotion.toLowerCase();
+    const emoji = emotionToEmoji[emotion] || "🤔";
+    document.getElementById('result').innerHTML = `
+        <h2>Predicted Emotion:</h2>
+        <p class="emoji">${emoji}</p>
+        <p class="result-text">${emotion.charAt(0).toUpperCase() + emotion.slice(1)}</p>
+    `;
+})
+.catch(error => {
+    document.getElementById('result').innerHTML = `<p>Error: ${error.message}</p>`;
+});
+
+            
+        });
+    </script>
+</body>
+</html>
