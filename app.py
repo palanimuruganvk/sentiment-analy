@@ -1,37 +1,35 @@
 from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS  # Import CORS if you need cross-origin support
 import pickle
 import numpy as np
 import re
-import tensorflow as tf
 from tensorflow.keras.models import model_from_json
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-# Initialize Flask app
+# Initialize Flask app and enable CORS if needed
 app = Flask(__name__)
+CORS(app)  # This will allow cross-origin requests during development
 
 # Load model architecture
 with open('sentiment_emotion_model_architecture.json', 'r') as json_file:
     model_json = json_file.read()
-
 model = model_from_json(model_json)
-    
+
 # Load model weights
 with open('sentiment_emotion_model_weights.pkl', 'rb') as f:
     weights = pickle.load(f)
-
 model.set_weights(weights)
 
 # Load tokenizer and emotion labels
 with open('tokenizer.pkl', 'rb') as f:
     tokenizer = pickle.load(f)
-
 with open('emotion_labels.pkl', 'rb') as f:
     emotion_labels = pickle.load(f)
 
-# Determine input length for padding
-input_length = 100  # Adjust this to match your training maxlen
+# Define input length for padding
+input_length = 100  # Adjust this to match your model's max input length
 
-# Preprocess text function (without using NLTK)
+# Preprocess text function
 def preprocess_text(text):
     text = text.lower()  # Convert to lowercase
     text = re.sub(r'\d+', '', text)  # Remove numbers
@@ -49,8 +47,7 @@ def predict_emotion(sentence):
     emotion = emotion_labels[emotion_index]
     return emotion
 
-
-
+# API route for prediction (called by the frontend JavaScript)
 @app.route('/', methods=['POST'])
 def classify():
     try:
@@ -69,16 +66,9 @@ def classify():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# Route to render HTML page with input form
 @app.route('/input', methods=['GET', 'POST'])
 def index():
-    if request.method == 'POST':
-        user_input = request.form['user_input']
-        
-        # Call the prediction function
-        predicted_emotion = predict_emotion(user_input)
-        
-        return render_template('textinput.html', user_input=user_input, predicted_emotion=predicted_emotion)
-    
     return render_template('textinput.html')
 
 if __name__ == '__main__':
