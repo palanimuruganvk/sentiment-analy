@@ -49,11 +49,9 @@ def predict_emotion(sentence):
     emotion = emotion_labels[emotion_index]
     return emotion
 
-@app.route('/')
-def home():
-    return render_template('samo.html')
 
-@app.route('/classify', methods=['POST'])
+
+@app.route('/', methods=['POST'])
 def classify():
     try:
         data = request.get_json()
